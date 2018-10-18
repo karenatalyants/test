@@ -21,4 +21,4 @@ const forEach = function (array, jj) {
   }
 };
 
-console.log(forEach([2,3,4],factorial));
+forEach([2,3,4],factorial);
