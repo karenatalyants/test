@@ -6,12 +6,12 @@
 
 
 
-  let x = 10;
+  let x = 850;
   let y = 10;
   let width = 50;
   let height = 50;
   let xDelta = 10;
-  let yDelta = 10;
+  let yDelta = 15;
 
   const reverseDirX = function() {
     xDelta = xDelta * (-1);
