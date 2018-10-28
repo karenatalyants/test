@@ -4,6 +4,10 @@
   canvas.width = 1400;
   canvas.height = 700;
 
+
+  context.fillStyle = '#bbdefb';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
   // returns a random number between 1 and the given number inclusively
   const rand = function(num) {
     return Math.floor(Math.random() * num) + 1;
@@ -30,19 +34,25 @@
   // creates the boxes, of random position and random color, as many as the number given
   const createBoxes = function(count, canvasWidth, canvasHeight) {
 
-
-
     let i = 0;
     for (let i = 0; i < count; i++) {
-
       enemies[i] = {
         x: rand(canvas.width - 50),
         y: rand(canvas.height - 50),
-        xDelta: 10,
-        yDelta: 10,
+        xDelta: 5,
+        yDelta: 5,
         width: 50,
         height: 50,
         color: colorRandomizer(),
+        //the below appeared to put the boxes into Brownian motion haha (call this method in update right after the movement comment)
+        /*randDir: function() {
+          if (rand(2) === 1) {
+            this.xDelta = this.xDelta * (-1);
+          }
+          if (rand(2) === 2) {
+            this.yDelta = this.yDelta * (-1);
+          }
+        },*/
         reverseDirX: function() {
           this.xDelta = this.xDelta * (-1);
         },
@@ -50,39 +60,31 @@
           this.yDelta = this.yDelta * (-1);
         },
         draw: function() {
-          context.fillStyle = '#bbdefb';
-          context.fillRect(0, 0, canvas.width, canvas.height);
           context.fillStyle = this.color;
           context.fillRect(this.x, this.y, this.width, this.height);
         },
         update: function() {
           context.fillStyle = '#bbdefb';
           context.fillRect(0, 0, canvas.width, canvas.height);
-          context.fillStyle = this.color;
-          context.fillRect(this.x, this.y, this.width, this.height);
 
-
+          //change direction when meeting the border of the canvas
           if (this.x >= canvas.width - this.width || this.x <= 0) {
             this.reverseDirX();
           }
-
           if (this.y >= canvas.height - this.height || this.y <= 0) {
             this.reverseDirY();
           }
-
+          //movement
           this.x = this.x + this.xDelta;
           this.y = this.y + this.yDelta;
-
-
         }
       }
     }
-
     return enemies;
   };
 
 
-  createBoxes(25, canvas.width, canvas.height);
+  createBoxes(10, canvas.width, canvas.height);
 
   console.log(enemies);
 
@@ -102,8 +104,9 @@
   }
 
   const loop = function() {
-    draw();
     update();
+    draw();
+
     requestAnimationFrame(loop);
   };
 
